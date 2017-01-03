@@ -32,5 +32,3 @@ def visualiseInput( ):
             plt.ylabel('density')
             plt.title(GiftTypes[k])
             plt.show()
-            
-            

@@ -1,4 +1,5 @@
 from loadInput import loadInput
+from findGiftWeight import findGiftWeight
 import numpy as np
 import pandas as pd
 
@@ -8,17 +9,21 @@ def processInput( fileName ):
     nGifts = len(giftList)
     giftList['GiftType'] = giftList.GiftId.apply(lambda x: x.split('_')[0])
     giftList['GiftWeight'] = np.zeros(nGifts)
+    giftList['GiftWeight'] = giftList.GiftType.apply(lambda x: findGiftWeight(x,1)[0])
+        
+    giftListSummary = pd.DataFrame()
+    giftListSummary['GiftType'] = giftList['GiftType'].unique()
+    nGiftTypes = len(giftListSummary['GiftType'])
     
-    dispatcher = {'horse' : (lambda : max(0, np.random.normal(5,2,1)[0])),
-    'ball' : (lambda : max(0, 1 + np.random.normal(1,0.3,1)[0])),
-    'bike' : (lambda : max(0, np.random.normal(20,10,1)[0])),
-    'train' : (lambda : max(0, np.random.normal(10,5,1)[0])),
-    'coal' : (lambda : 47 * np.random.beta(0.5,0.5,1)[0]),
-    'book' : (lambda : np.random.chisquare(2,1)[0]),
-    'doll' : (lambda : np.random.gamma(5,1,1)[0]),
-    'blocks' : (lambda : np.random.triangular(5,10,20,1)[0]),
-    'gloves' : (lambda : 3.0 + np.random.rand(1)[0] if np.random.rand(1) < 0.3 else np.random.rand(1)[0])}
+    giftListSummary['nGifts'] = giftListSummary.GiftType.apply(lambda x : len(giftList[giftList['GiftType']==x]))
+    giftListSummary['weight_average'] = np.zeros(nGiftTypes)
+    giftListSummary['weight_STD'] = np.zeros(nGiftTypes)
+    
+    n = 100000 #an arbitrarily large number for statistical analysis
+    
+    for i in np.arange(nGiftTypes):
+        x = findGiftWeight(giftListSummary['GiftType'][i], n)
+        giftListSummary['weight_average'][i] = np.average(x)
+        giftListSummary['weight_STD'][i] = np.std(x)
 
-    giftList['GiftWeight'] = giftList.GiftType.apply(lambda x: dispatcher[x]())
-
-    return giftList
+    return giftList, giftListSummary
