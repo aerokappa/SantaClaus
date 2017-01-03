@@ -6,6 +6,10 @@ def glovesWeight ( n ):
     x[x<0.3] += 3
     return x
     
+#
+# Gift types and number of gift types have been hardcoded here.
+#
+
 def findGiftWeight( GiftType, n ):
     dispatcher = {'horse' : (np.maximum(0, np.random.normal(5,2,n))),
     'ball' : (np.maximum(0, 1 + np.random.normal(1,0.3,n))),

@@ -16,6 +16,8 @@ def processInput( fileName ):
     nGiftTypes = len(giftListSummary['GiftType'])
     
     giftListSummary['nGifts'] = giftListSummary.GiftType.apply(lambda x : len(giftList[giftList['GiftType']==x]))
+    giftListSummary['nGiftsPacked'] = 0
+    giftListSummary['nGiftsNotPacked'] = giftListSummary.GiftType.apply(lambda x : len(giftList[giftList['GiftType']==x]))
     giftListSummary['weight_average'] = np.zeros(nGiftTypes)
     giftListSummary['weight_STD'] = np.zeros(nGiftTypes)
     
