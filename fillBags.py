@@ -12,7 +12,7 @@ import pandas as pd
 
 def fillOneBag( itemCount, giftListSummary ):
     
-    n = 10
+    n = 10000
         
     nGiftTypes = len(giftListSummary['GiftType'])
     
@@ -23,4 +23,6 @@ def fillOneBag( itemCount, giftListSummary ):
         for j in np.arange(itemCount[i]):
             giftWeights = np.vstack((giftWeights, findGiftWeight(giftType,n)))
     
-    sumWeights = sum(giftWeights,1)        
+    sumWeights = sum(giftWeights,0)
+        
+    return sumWeights      

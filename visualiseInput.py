@@ -8,7 +8,7 @@ from processInput import processInput
 
 def visualiseInput( ):
     fileName = 'gifts.csv'
-    giftList = processInput( fileName )
+    giftList, giftListSummary = processInput( fileName )
 
     GiftTypes = giftList['GiftType'].unique()
     
