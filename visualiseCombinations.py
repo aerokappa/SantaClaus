@@ -11,26 +11,38 @@ fileName = 'gifts.csv'
 
 giftList, giftListSummary = processInput( fileName )
 
-itemCount = np.array([0,0,1,0,0,7,0,0,0])
+nHorse = 0
+nBall = 0
+nBike = 0
+nTrain = 0
+nCoal = 0
+nBook = 0
+nDoll = 0
+nBlocks = 0
+nGloves = 0
 
-sumWeights = fillOneBag(itemCount, giftListSummary)
+for nGloves in np.arange(1,20):
+    itemCount = np.array([nHorse,nBall,nBike,nTrain,nCoal,nBook,nDoll,nBlocks,nGloves])
 
-#plt.cla()
-#plt.clf()
-#plt.close()
-#
-#n, bins, patches = plt.hist(sumWeights,50,normed=1)
-##plt.plot(bins)
-#plt.xlabel('weight')
-#plt.ylabel('density')
-#plt.title('[0,0,0,0,1,1,1,0,1], mean =' + str(np.mean(sumWeights)) + ' , std =' + str(np.std(sumWeights)))
-#plt.show()
-#
+    sumWeights = fillOneBag(itemCount, giftListSummary)
 
-origWeight = np.mean(sumWeights)
+    #plt.cla()
+    #plt.clf()
+    #plt.close()
+    #
+    #n, bins, patches = plt.hist(sumWeights,50,normed=1)
+    ##plt.plot(bins)
+    #plt.xlabel('weight')
+    #plt.ylabel('density')
+    #plt.title('[0,0,0,0,1,1,1,0,1], mean =' + str(np.mean(sumWeights)) + ' , std =' + str(np.std(sumWeights)))
+    #plt.show()
+    #
 
-sumWeights[sumWeights>=50]=0
 
-newWeight = np.mean(sumWeights)
+    origWeight = np.mean(sumWeights)
 
-print newWeight, origWeight, origWeight-newWeight
+    sumWeights[sumWeights>=50]=0
+
+    newWeight = np.mean(sumWeights)
+
+    print itemCount, "Approx. Bag Weight = ", newWeight, " Lost Weight = ", origWeight-newWeight
