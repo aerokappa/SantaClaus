@@ -34,4 +34,4 @@ allBags = genUseCases()
 
 b_mean, b_std = getBagWeights(allBags, giftListSummary)
 
-np.savez("data", allBags, b_mean, b_std)
+np.savez("allData", allBags, b_mean, b_std)

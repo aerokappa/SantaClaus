@@ -47,7 +47,8 @@ def getBagWeights( bagItemCounts, giftListSummary ):
     bagWeight_std  = np.zeros(nBags)
     
     for i, currBag in enumerate(bagList):
-        print nBags, i
+        if (i%1000==0):
+            print nBags, i
         bagWeights = fillOneBag( currBag, giftListSummary)
         if np.size(bagWeights) != 1:
             bagWeights[ bagWeights >= 50 ] = 0
