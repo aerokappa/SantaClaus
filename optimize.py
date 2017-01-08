@@ -37,6 +37,7 @@ def calcGradient( itemCount, giftListSummary ):
 def optimizeBagWeight( itemCount, giftListSummary ):
 
     oldSumWeights = fillOneBag(itemCount, giftListSummary)
+    origOldWeight = np.mean(oldSumWeights)
     oldSumWeights[oldSumWeights>50] = 0
     oldWeight = np.mean(oldSumWeights)
     
@@ -45,7 +46,7 @@ def optimizeBagWeight( itemCount, giftListSummary ):
     iter = 0
     tol = 0.1
     
-    print iter, oldWeight, itemCount
+    print 'iter: {0:03d}, mean_newWeight: {1:07.3f}, mean_lostWeight: {2:07.3f}, std_newWeight: {3:07.3f}, numItems: {4:03d}, {5}'.format(iter, oldWeight, origOldWeight-oldWeight, np.std(oldSumWeights), sum(itemCount), itemCount)    
     
     while ((newWeight-oldWeight)>tol or iter == 0):
         
@@ -60,8 +61,9 @@ def optimizeBagWeight( itemCount, giftListSummary ):
             break
         
         newSumWeights = fillOneBag(itemCount, giftListSummary)
+        origNewWeight = np.mean(newSumWeights) 
         newSumWeights[newSumWeights>50] = 0
         newWeight = np.mean(newSumWeights)    
             
         iter += 1
-        print iter, newWeight, np.std(newSumWeights), itemCount
+        print 'iter: {0:03d}, mean_newWeight: {1:07.3f}, mean_lostWeight: {2:07.3f}, std_newWeight: {3:07.3f}, numItems: {4:03d}, {5}'.format(iter, newWeight, origNewWeight-newWeight, np.std(newSumWeights), sum(itemCount), itemCount)
