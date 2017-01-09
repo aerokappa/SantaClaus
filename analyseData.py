@@ -2,6 +2,7 @@ import numpy as np
 from scipy.optimize import linprog
 
 from processInput import processInput
+from genGiftIDs import genGiftIDs
 
 npz = np.load('allData.npz')
 print npz.files
@@ -75,22 +76,37 @@ for i in np.arange(1000):
     for j in np.arange(len(approxSol)):
         if ((i>=sum(approxSol[:j])) & (i<sum(approxSol[:j+1]))):
             itemCount  = np.array(A[1:,sol.x!=0][:,j].transpose())[0]
-            
+                
+    #
+    #before random gift IDs were generated
+    #
+    #for k in np.arange(len(itemCount)):
+    #    if (itemCount[k] <= giftListSummary['nGiftsNotPacked'][k]):
+    #        for j in np.arange(itemCount[k]):
+    #            giftName = giftListSummary['GiftType'][k]
+    #            currGiftID = giftListSummary['nGiftsPacked'][k]
+    #            currentBag.append(giftName+'_'+str(currGiftID))
+    #            giftListSummary['nGiftsPacked'][k] += 1
+    #            giftListSummary['nGiftsNotPacked'][k] -= 1
+
+    #
+    # after random gift IDs were generated
+    #
+    giftIDs = genGiftIDs( giftListSummary )
+
     for k in np.arange(len(itemCount)):
         if (itemCount[k] <= giftListSummary['nGiftsNotPacked'][k]):
             for j in np.arange(itemCount[k]):
                 giftName = giftListSummary['GiftType'][k]
-                currGiftID = giftListSummary['nGiftsPacked'][k]
-                currentBag.append(giftName+'_'+str(currGiftID))
+                currentBag.append(giftIDs[giftName].pop())
                 giftListSummary['nGiftsPacked'][k] += 1
                 giftListSummary['nGiftsNotPacked'][k] -= 1
-        #print currentBag
-    #print currentBag
+                
     packedBags.append(currentBag)
     
 # Write to File 'submission.csv'
 
-subFile = open('submission_optimised.csv','w')
+subFile = open('submission_optimised_randomised_1.csv','w')
 subFile.write('Gifts\n')
 
 for currentBag in packedBags:
