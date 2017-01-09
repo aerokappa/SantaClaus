@@ -47,7 +47,8 @@ giftList, giftListSummary = processInput( fileName )
 packedBags = []
     
 for i in np.arange(1000):
-    if (i%100 == 0) print i
+    if (i%100 == 0):
+        print i
     currentBag = []
         
     #if (i< 333):   
@@ -73,7 +74,7 @@ for i in np.arange(1000):
         
     for j in np.arange(len(approxSol)):
         if ((i>=sum(approxSol[:j])) & (i<sum(approxSol[:j+1]))):
-            itemCount  = np.array(A[1:,sol.x!=0][:,0].transpose())[j]
+            itemCount  = np.array(A[1:,sol.x!=0][:,j].transpose())[0]
             
     for k in np.arange(len(itemCount)):
         if (itemCount[k] <= giftListSummary['nGiftsNotPacked'][k]):
