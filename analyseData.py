@@ -47,6 +47,11 @@ giftList, giftListSummary = processInput( fileName )
     
 packedBags = []
     
+#
+# after random gift IDs were generated
+#
+giftIDs = genGiftIDs( giftListSummary )
+    
 for i in np.arange(1000):
     if (i%100 == 0):
         print i
@@ -89,15 +94,11 @@ for i in np.arange(1000):
     #            giftListSummary['nGiftsPacked'][k] += 1
     #            giftListSummary['nGiftsNotPacked'][k] -= 1
 
-    #
-    # after random gift IDs were generated
-    #
-    giftIDs = genGiftIDs( giftListSummary )
-
     for k in np.arange(len(itemCount)):
         if (itemCount[k] <= giftListSummary['nGiftsNotPacked'][k]):
             for j in np.arange(itemCount[k]):
                 giftName = giftListSummary['GiftType'][k]
+                currGiftID = giftListSummary['nGiftsPacked'][k]
                 currentBag.append(giftIDs[giftName].pop())
                 giftListSummary['nGiftsPacked'][k] += 1
                 giftListSummary['nGiftsNotPacked'][k] -= 1
@@ -106,7 +107,7 @@ for i in np.arange(1000):
     
 # Write to File 'submission.csv'
 
-subFile = open('submission_optimised_randomised_1.csv','w')
+subFile = open('./submissions/submission_optimised_randomised_2.csv','w')
 subFile.write('Gifts\n')
 
 for currentBag in packedBags:
